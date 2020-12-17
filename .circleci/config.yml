@@ -8,7 +8,7 @@ jobs: # this is to creat a job
     steps: 
       - checkout # the first part of the steps is to check the branch then the cash
       - run: # this command is just to display the branch
-          name: show current branch
+          name: Show current branch
           command: echo ${CURRENT_BRANCH} # this is the first command to show the current branch with the variable from circleCI (Masterbranch)
       - restore_cache: 
           keys: 
@@ -30,9 +30,9 @@ jobs: # this is to creat a job
       - checkout
       - run:
           name: Show current branch
-          command: echo ${{CURRENT_BRANCH}}
+          command: echo ${CURRENT_BRANCH}
       - run:
-          name: Instaliling AWS CLI
+          name: Installing AWS CLI
           working_directory: /
           command: | # not using the -alpine version command so we can not APK to install what ever I want
             sudo apt-get -y -qq update
@@ -40,7 +40,9 @@ jobs: # this is to creat a job
             sudo apt-get install -y python-pip python-dev build-essential
       - run:
           name: Build Project
-          command: |
+          command: | # npm Install npm run build
+            npm install
+            npm run build
             cd build
             zip ../build.zip -r * .[^.]*
             echo "Build successful"
@@ -57,7 +59,7 @@ jobs: # this is to creat a job
               aws --region ${AWS_REGION} s3 sync ~/repository/build s3://${AWS_DEV_BUCKET} --delete
             fi
 
-deploy-to-aws-cloudfront:
+  deploy-to-aws-cloudfront:
     docker:
       - image: circleci/node:15.4.0
     working_directory: ~/repository
