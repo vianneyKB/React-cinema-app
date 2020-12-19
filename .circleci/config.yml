@@ -86,11 +86,11 @@ jobs: # this is to creat a job
       - run:
           name: Deploy to AWS Cloudfront
           command: |
-            aws configure set preview.cloudfront
-            if [ "${CURRENT_BRANCH}" == "main"]
+            aws configure set preview.cloudfront true
+            if [ "${CURRENT_BRANCH}" == "main" ]
             then
               aws cloudfront create-invalidation --distribution-id ${AWS_PRODUCTION_DISTRIBUTION_ID} --paths /\*
-            elif [ "${CURRENT_BRANCH}" == "staging"]
+            elif [ "${CURRENT_BRANCH}" == "staging" ]
             then
               aws cloudfront create-invalidation --distribution-id ${AWS_STAGING_DISTRIBUTION_ID} --paths /\*
             else
