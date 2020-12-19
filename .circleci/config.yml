@@ -9,7 +9,7 @@ jobs: # this is to creat a job
       - checkout # the first part of the steps is to check the branch then the cash
       - run: # this command is just to display the branch
           name: Show current branch
-          command: echo ${CIRCLE_BRANCH} # this is the first command to show the current branch with the variable from circleCI (Masterbranch)
+          command: echo ${CURRENT_BRANCH} # this is the first command to show the current branch with the variable from circleCI (Masterbranch)
       - restore_cache: 
           keys: 
             - app-{{ checksum "package.json"}}
