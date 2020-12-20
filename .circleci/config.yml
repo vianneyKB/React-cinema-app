@@ -49,10 +49,9 @@ aliases:
         sudo apt-get install -y python-pip python-dev build-essential
   - &build-project
     run:
-      name: Build Project
+        name: Build Project
       #npm Install npm run build
-      command: | 
-      # npm Install npm run build
+        command: | 
         npm install
         npm run build
         cd build
