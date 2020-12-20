@@ -1,52 +1,66 @@
 version: 2.1
-executors: # executors define an underline tech or environment where to run the job
+# executors define an underline tech or environment where to run the job
+executors: 
   app-executor:
-    docker: # this the docker image
-      - image: circleci/node:15.4.0 # the version of the node I am using can be also named "latest"
-    working_directory: ~/repository #and this is my directory name
-aliases: #alias are like variables it allows to create reusable variables
+    # this the docker image
+    docker: 
+      # the version of the node I am using can be also named "latest"
+      - image: circleci/node:15.4.0 
+    #and this is my directory name
+    working_directory: ~/repository 
+#alias are like variables it allows to create reusable variables
+aliases: 
   - &show-current-branch-name
-    run: # this command is just to display the branch
+    # this command is just to display the branch
+    run: 
       name: Show current branch
-      command: echo ${CURRENT_BRANCH} # this is the first command to show the current branch with the variable from circleCI (Masterbranch)
+      # this is the first command to show the current branch with the variable from circleCI (Masterbranch)
+      command: echo ${CURRENT_BRANCH} 
   - &restore-cache
     restore_cache: 
       keys: 
         - app-{{ checksum "package.json"}}
-        - app- # this part check if we have the cach if not we gonna move to save
+        # this part check if we have the cach if not we gonna move to save
+        - app- 
   - &install-dependencies
     run:
       name: Install dependencies
       command: npm install
   - &save-cache
-    save_cache: # here we save the cach if it was not saved before
+    # here we save the cach if it was not saved before
+    save_cache: 
       paths:
-        - node_modules # I am saving the node module so that I don't have to dowmload the modules ork packages from scratch
-      key: app-{{ checksum "package.json"}} #so i save using the same key.
+        # I am saving the node module so that I don't have to dowmload the modules ork packages from scratch
+        - node_modules 
+      #so i save using the same key.
+      key: app-{{ checksum "package.json"}} 
   - &install-aws-cli
     run:
       name: Installing AWS CLI
       working_directory: /
-      command: | # not using the -alpine version command so we can not APK to install what ever I want
+      # not using the -alpine version command so we can not APK to install what ever I want
+      command: | 
         sudo apt-get -y -qq update
         sudo apt-get install -y awscli
         sudo apt-get install -y python-pip python-dev build-essential
   - &build-project
     run:
       name: Build Project
-      command: | # npm Install npm run build
+      # npm Install npm run build
+      command: | 
         npm install
         npm run build
         cd build
         zip ../build.zip -r * .[^.]*
         echo "Build successful"
 
-
-jobs: # this is to creat a job
+# this is to creat a job
+jobs: 
   build:
     executor: app-executor
     steps: 
-      - checkout # the first part of the steps is to check the branch then the cash
+      # the first part of the steps is to check the branch then the cash
+      - checkout 
       - *show-current-branch-name
       - *restore-cache
       - *install-dependencies
@@ -73,7 +87,7 @@ jobs: # this is to creat a job
             fi
 
   deploy-to-aws-cloudfront:
-    executor: app-executer
+    executor: app-executor
     steps:
       - checkout
       - *show-current-branch-name
