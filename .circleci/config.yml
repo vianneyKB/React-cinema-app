@@ -2,18 +2,22 @@ version: 2.1
 executors: # executors define an underline tech or environment where to run the job
   app-executor:
     docker: # this the docker image
-      - image: circleci/node:15.4.0 # the version of the node I am using can be also named "latest"
-    working_directory: ~/repository #and this is my directory name
+      - image: circleci/node:15.4.0 
+      # the version of the node I am using can be also named "latest"
+    working_directory: ~/repository 
+    #and this is my directory name
 aliases: #alias are like variables it allows to create reusable variables
   - &show-current-branch-name
     run: # this command is just to display the branch
       name: Show current branch
-      command: echo ${CURRENT_BRANCH} # this is the first command to show the current branch with the variable from circleCI (Masterbranch)
+      command: echo ${CURRENT_BRANCH} 
+      # this is the first command to show the current branch with the variable from circleCI (Masterbranch)
   - &restore-cache
     restore_cache: 
       keys: 
         - app-{{ checksum "package.json"}}
-        - app- # this part check if we have the cach if not we gonna move to save
+        - app- 
+        # this part check if we have the cach if not we gonna move to save
   - &install-dependencies
     run:
       name: Install dependencies
@@ -21,20 +25,24 @@ aliases: #alias are like variables it allows to create reusable variables
   - &save-cache
     save_cache: # here we save the cach if it was not saved before
       paths:
-        - node_modules # I am saving the node module so that I don't have to dowmload the modules ork packages from scratch
-      key: app-{{ checksum "package.json"}} #so i save using the same key.
+        - node_modules 
+        # I am saving the node module so that I don't have to dowmload the modules ork packages from scratch
+      key: app-{{ checksum "package.json"}} 
+      #so i save using the same key.
   - &install-aws-cli
     run:
       name: Installing AWS CLI
       working_directory: /
-      command: | # not using the -alpine version command so we can not APK to install what ever I want
+      # not using the -alpine version command so we can not APK to install what ever I want
+      command: | 
         sudo apt-get -y -qq update
         sudo apt-get install -y awscli
         sudo apt-get install -y python-pip python-dev build-essential
   - &build-project
     run:
       name: Build Project
-      command: | # npm Install npm run build
+      command: | 
+      # npm Install npm run build
         npm install
         npm run build
         cd build
