@@ -1,46 +1,27 @@
 version: 2.1
-# executors define an underline tech or environment where to run the job
+#executors define an underline tech or environment where to run the job
 executors: 
   app-executor:
-<<<<<<< HEAD
-    # this the docker image
+    #this the docker image
     docker: 
-      # the version of the node I am using can be also named "latest"
+      #the version of the node I am using can be also named "latest"
       - image: circleci/node:15.4.0 
     #and this is my directory name
     working_directory: ~/repository 
 #alias are like variables it allows to create reusable variables
 aliases: 
-=======
-    docker: # this the docker image
-      - image: circleci/node:15.4.0 
-      # the version of the node I am using can be also named "latest"
-    working_directory: ~/repository 
-    #and this is my directory name
-aliases: #alias are like variables it allows to create reusable variables
->>>>>>> 2e54af1755984b0ac257ad01d84f4023dfd6034d
   - &show-current-branch-name
     # this command is just to display the branch
     run: 
       name: Show current branch
-<<<<<<< HEAD
       # this is the first command to show the current branch with the variable from circleCI (Masterbranch)
       command: echo ${CURRENT_BRANCH} 
-=======
-      command: echo ${CURRENT_BRANCH} 
-      # this is the first command to show the current branch with the variable from circleCI (Masterbranch)
->>>>>>> 2e54af1755984b0ac257ad01d84f4023dfd6034d
   - &restore-cache
     restore_cache: 
       keys: 
         - app-{{ checksum "package.json"}}
-<<<<<<< HEAD
-        # this part check if we have the cach if not we gonna move to save
+        #this part check if we have the cach if not we gonna move to save
         - app- 
-=======
-        - app- 
-        # this part check if we have the cach if not we gonna move to save
->>>>>>> 2e54af1755984b0ac257ad01d84f4023dfd6034d
   - &install-dependencies
     run:
       name: Install dependencies
@@ -49,17 +30,14 @@ aliases: #alias are like variables it allows to create reusable variables
     # here we save the cach if it was not saved before
     save_cache: 
       paths:
-<<<<<<< HEAD
-        # I am saving the node module so that I don't have to dowmload the modules ork packages from scratch
+        #I am saving the node module so that I don't have to dowmload the modules ork packages from scratch
         - node_modules 
       #so i save using the same key.
       key: app-{{ checksum "package.json"}} 
-=======
         - node_modules 
-        # I am saving the node module so that I don't have to dowmload the modules ork packages from scratch
+        #I am saving the node module so that I don't have to dowmload the modules ork packages from scratch
       key: app-{{ checksum "package.json"}} 
       #so i save using the same key.
->>>>>>> 2e54af1755984b0ac257ad01d84f4023dfd6034d
   - &install-aws-cli
     run:
       name: Installing AWS CLI
@@ -72,20 +50,16 @@ aliases: #alias are like variables it allows to create reusable variables
   - &build-project
     run:
       name: Build Project
-<<<<<<< HEAD
-      # npm Install npm run build
-      command: | 
-=======
+      #npm Install npm run build
       command: | 
       # npm Install npm run build
->>>>>>> 2e54af1755984b0ac257ad01d84f4023dfd6034d
         npm install
         npm run build
         cd build
         zip ../build.zip -r * .[^.]*
         echo "Build successful"
 
-# this is to creat a job
+#this is to creat a job
 jobs: 
   build:
     executor: app-executor
