@@ -5,11 +5,11 @@ executors: # executors define an underline tech or environment where to run the 
       - image: circleci/node:15.4.0 # the version of the node I am using can be also named "latest"
     working_directory: ~/repository #and this is my directory name
 aliases: #alias are like variables it allows to create reusable variables
-  - &show-curent-branc-name
+  - &show-current-branch-name
     run: # this command is just to display the branch
       name: Show current branch
       command: echo ${CURRENT_BRANCH} # this is the first command to show the current branch with the variable from circleCI (Masterbranch)
-  - &restor-cashe
+  - &restore-cache
     restore_cache: 
       keys: 
         - app-{{ checksum "package.json"}}
@@ -23,7 +23,7 @@ aliases: #alias are like variables it allows to create reusable variables
       paths:
         - node_modules # I am saving the node module so that I don't have to dowmload the modules ork packages from scratch
       key: app-{{ checksum "package.json"}} #so i save using the same key.
-  - &Installing-aws-cli
+  - &install-aws-cli
     run:
       name: Installing AWS CLI
       working_directory: /
@@ -44,21 +44,21 @@ aliases: #alias are like variables it allows to create reusable variables
 
 jobs: # this is to creat a job
   build:
-    executor: app-executer
+    executor: app-executor
     steps: 
       - checkout # the first part of the steps is to check the branch then the cash
-      - &show-curent-branc-name
-      - &restor-cashe
-      - &install-dependencies
-      - &save-cache
+      - *show-current-branch-name
+      - *restore-cache
+      - *install-dependencies
+      - *save-cache
 
   deploy-to-aws-s3:
     executor: app-executer
     steps:
       - checkout
-      - &show-curent-branc-name
-      - &Installing-aws-cli
-      - &build-project
+      - *show-current-branch-name
+      - *install-aws-cli
+      - *build-project
       - run:
           name: Deploy to AWS S3
           command: |
@@ -76,9 +76,9 @@ jobs: # this is to creat a job
     executor: app-executer
     steps:
       - checkout
-      - &show-curent-branc-name
-      - &Installing-aws-cli
-      - &build-project
+      - *show-current-branch-name
+      - *install-aws-cli
+      - *build-project
       - run:
           name: Deploy to AWS Cloudfront
           command: |
