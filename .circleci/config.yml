@@ -2,25 +2,22 @@ version: 2.1
 
 jobs: # this is to creat a job
   build:
-    docker: # this the docker image
-      - image: circleci/node:15.4.0 # the version of the node I am using can be also named "latest"
-    working_directory: ~/repository #and this is my directory name
-    steps: 
-      - checkout # the first part of the steps is to check the branch then the cash
-      - run: # this command is just to display the branch
-          name: Show current branch
-          command: echo ${CIRCLE_BRANCH} # this is the first command to show the current branch with the variable from circleCI (Masterbranch)
-      - restore_cache: 
-          keys: 
-            - app-{{ checksum "package.json"}}
-            - app- # this part check if we have the cach if not we gonna move to save
+    executor: app-executor
+    steps:
+      - checkout
+      - *show-current-branch-name
+      - *restore-cache
+      - *install-dependencies
+      - *save-cache  
+  linting:
+    executor: app-executor
+    steps:
+      - checkout
+      - *show-current-branch-name
+      - *restore-cache
       - run:
-          name: Install dependencies
-          command: npm install
-      - save_cache: # here we save the cach if it was not saved before
-          paths:
-            - node_modules # I am saving the node module so that I don't have to dowmload the modules ork packages from scratch
-          key: app-{{ checksum "package.json"}} #so i save using the same key
+          name: Run linting
+          command: npm run lint
 
   deploy-to-aws-s3:
     docker:
@@ -101,9 +98,18 @@ workflows:
   build_and_deploy:
     jobs:
       - build
+      - linting:
+          requires:
+              - build
+          filters:
+            branches:
+              only:
+                - develop
+                - staging
+                - main
       - deploy-to-aws-s3:
           requires:
-            - build
+            - linting
           filters:
             branches:
               only:
