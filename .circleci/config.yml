@@ -1,6 +1,6 @@
 version: 2.1
 
-jobs: # this is to creat a job
+jobs:
   build:
     executor: app-executor
     steps:
@@ -31,13 +31,13 @@ jobs: # this is to creat a job
       - run:
           name: Installing AWS CLI
           working_directory: /
-          command: | # not using the -alpine version command so we can not APK to install what ever I want
+          command: | 
             sudo apt-get -y -qq update
             sudo apt-get install -y awscli
             sudo apt-get install -y python-pip python-dev build-essential
       - run:
           name: Build Project
-          command: | # npm Install npm run build
+          command: | 
             npm install
             npm run build
             cd build
@@ -68,7 +68,7 @@ jobs: # this is to creat a job
       - run:
           name: Instaliling AWS CLI
           working_directory: /
-          command: | # not using the -alpine version command so we can not APK to install what ever I want
+          command: |
             sudo apt-get -y -qq update
             sudo apt-get install -y awscli
             sudo apt-get install -y python-pip python-dev build-essential
