@@ -5,16 +5,16 @@ jobs:
     executor: app-executor
     steps:
       - checkout
-      - &Show-current-branch-name
-      - *restore-cache
-      - *install-dependencies
-      - *save-cache  
+      - &show-current-branch-name
+      - &restore-cache
+      - &install-dependencies
+      - &save-cache  
   linting:
     executor: app-executor
     steps:
       - checkout
-      - *show-current-branch-name
-      - *restore-cache
+      - &show-current-branch-name
+      - &restore-cache
       - run:
           name: Run linting
           command: npm run lint
