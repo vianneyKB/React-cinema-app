@@ -5,7 +5,7 @@ jobs:
     executor: app-executor
     steps:
       - checkout
-      - *show-current-branch-name
+      - &Show-current-branch-name
       - *restore-cache
       - *install-dependencies
       - *save-cache  
