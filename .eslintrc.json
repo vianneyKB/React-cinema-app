@@ -11,7 +11,9 @@
         "Atomics": "readonly",
         "SharedArrayBuffer": "readonly"
     },
+    "parser": "babel-eslint",
     "parserOptions": {
+        "allowImportExportEverywhere": true,
         "ecmaFeatures": {
             "jsx": true
         },
@@ -30,6 +32,7 @@
         "semi": [2, "always"],
         "space-before-function-paren": [0, {"anonymous": "always", "named": "always"}],
         "camelcase": 0,
-        "no-return-assign": 0
+        "no-return-assign": 0,
+        "react/react-in-jsx-scope": "off"
     }
 }
