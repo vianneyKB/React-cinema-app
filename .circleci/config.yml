@@ -1,5 +1,5 @@
 orbs:
-  slack: circleci/slack@4.2
+  slack: circleci/slack@4.2.0
 version: 2.1
 executors:
   app-executor:
@@ -8,7 +8,7 @@ executors:
     working_directory: ~/repository 
   slack-executor:
     docker:
-      - image: 'cibuilds/base:latesy'
+      - image: 'cibuilds/base:latest'
     resource_class: small
 
 aliases: 
@@ -154,7 +154,7 @@ jobs:
             fi
 
   notify-via-slack:
-    executor: slack-excutor
+    executor: slack-executor
     steps:
       - slack/notify:
         message: "${CIRCLE_BRANCH} branch deployment to aws s3 and cloudfront is complete."
