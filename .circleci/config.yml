@@ -1,5 +1,5 @@
 orbs:
-  slack: circleci/slack@4.2.0
+  slack: circleci/slack@4.3.0
 version: 2.1
 executors:
   app-executor:
