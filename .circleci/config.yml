@@ -156,7 +156,6 @@ jobs:
   notify-via-slack:
     executor: slack-executor
     steps:
-      - slack/notify
       - run: echo "Slack notification"
       - slack/notify:
           event: 'always'
