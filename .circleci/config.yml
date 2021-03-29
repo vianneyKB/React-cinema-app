@@ -153,66 +153,6 @@ jobs:
               aws cloudfront create-invalidation --distribution-id ${AWS_DEV_DISTRIBUTION_ID} --paths /\*
             fi
 
-  notify-via-slack:
-    executor: slack-executor
-    steps:
-      - run: echo "Slack notification"
-      - slack/notify:
-          event: 'always'
-          channel: 'cinema-ci'
-          template: ''
-          custom: |
-            {
-              "blocks": [
-                {
-                  "type": "header",
-                  "text": {
-                    "type": "plain_text",
-                    "text": "${CIRCLE_BRANCH} branch deployment to aws s3 and cloudfront is complete. 👍",
-                    "emoji": true
-                  }
-                },
-                {
-                  "type": "section",
-                  "fields": [
-                    {
-                      "type": "mrkdwn",
-                      "text": "*Project*:\n$CIRCLE_PROJECT_REPONAME"
-                    },
-                    {
-                      "type": "mrkdwn",
-                      "text": "*Branch*:\n$CIRCLE_BRANCH"
-                    },
-                    {
-                      "type": "mrkdwn",
-                      "text": "*When*:\n$(date +'%m/%d/%Y %T')"
-                    },
-                    {
-                      "type": "mrkdwn",
-                      "text": "*Build*:\n$CIRCLE_BUILD_NUM"
-                    },
-                    {
-                      "type": "mrkdwn",
-                      "text": "*Author*:\n$CIRCLE_PROJECT_USERNAME"
-                    }
-                  ]
-                },
-                {
-                  "type": "actions",
-                  "elements": [
-                    {
-                      "type": "button",
-                      "text": {
-                        "type": "plain_text",
-                        "text": "View Job"
-                      },
-                      "url": "${CIRCLE_BUILD_URL}"
-                    }
-                  ]
-                }
-              ]
-            }
-
 workflows:
   build_and_deploy:
     jobs:
@@ -247,15 +187,6 @@ workflows:
       - deploy-to-aws-cloudfront:
           requires:
             - deploy-to-aws-s3
-          filters:
-            branches:
-              only:
-                - develop
-                - staging
-                - main
-      - notify-via-slack:
-          requires:
-            - deploy-to-aws-cloudfront
           filters:
             branches:
               only:
