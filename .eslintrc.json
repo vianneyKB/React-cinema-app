@@ -33,6 +33,8 @@
         "space-before-function-paren": [0, {"anonymous": "always", "named": "always"}],
         "camelcase": 0,
         "no-return-assign": 0,
-        "react/react-in-jsx-scope": "off"
+        "react/react-in-jsx-scope": "off",
+        "no-console": "off",
+        "indent": ["error", 2]// Indent with 4 spaces
     }
 }
