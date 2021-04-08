@@ -68,7 +68,6 @@ jobs:
           name: Run linting
           command: npm run lint
 
-
   deploy-to-aws-s3:
     docker:
       - image: circleci/node:15.4.0
@@ -157,10 +156,9 @@ workflows:
                 - develop
                 - staging
                 - main
-                
       - deploy-to-aws-s3:
           requires:
-            - prettier
+            - linting
           filters:
             branches:
               only:
