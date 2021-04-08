@@ -48,15 +48,15 @@ aliases:
         zip ../build.zip -r * .[^.]*
         echo "Build successful"
 
-jobs:
-  build:
-    executor: app-executor
-    steps:
-      - checkout
-      - *show-current-branch-name
-      - *restore-cache
-      - *install-dependencies
-      - *save-cache
+  jobs:
+    build:
+      executor: app-executor
+      steps:
+        - checkout
+        - *show-current-branch-name
+        - *restore-cache
+        - *install-dependencies
+        - *save-cache
 
   linting:
     executor: app-executor
