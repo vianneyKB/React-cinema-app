@@ -49,7 +49,7 @@
   },
   "devDependencies": {
     "eslint-plugin-import": "^2.22.1",
-    "prettier": "^2.2.1",
+    "prettier": "2.2.1",
     "prettier-check": "^2.0.0"
   }
 }
