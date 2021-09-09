@@ -8,6 +8,13 @@
 			"problemMatcher": [],
 			"label": "npm: test",
 			"detail": "react-scripts test"
+		},
+		{
+			"type": "npm",
+			"script": "prettier:check",
+			"problemMatcher": [],
+			"label": "npm: prettier:check",
+			"detail": "prettier --check src\\**\\*.{js,jsx,json}"
 		}
 	]
 }

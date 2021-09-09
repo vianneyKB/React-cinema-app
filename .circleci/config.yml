@@ -68,6 +68,16 @@ jobs:
           name: Run linting
           command: npm run lint
 
+  prettier:
+    executor: app-executor
+    steps:
+      - checkout
+      - *show-current-branch-name
+      - *restore-cache
+      - run:
+          name: Run prettier check
+          command: npm run prettier:check
+
   deploy-to-aws-s3:
     docker:
       - image: circleci/node:15.4.0
@@ -148,6 +158,15 @@ workflows:
     jobs:
       - build
       - linting:
+          requires:
+            - build
+          filters:
+            branches:
+              only:
+                - develop
+                - staging
+                - main
+      - prettier:
           requires:
             - build
           filters:

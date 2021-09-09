@@ -5,15 +5,16 @@
     },
     "extends": [
         "plugin:react/recommended",
-        "standard"
+        "standard",
+        "prettier"
     ],
     "globals": {
         "Atomics": "readonly",
         "SharedArrayBuffer": "readonly"
     },
-    "parser": "babel-eslint",
+    //"parser": "babel-eslint",
     "parserOptions": {
-        "allowImportExportEverywhere": true,
+        //"allowImportExportEverywhere": true,
         "ecmaFeatures": {
             "jsx": true
         },
@@ -32,9 +33,9 @@
         "semi": [2, "always"],
         "space-before-function-paren": [0, {"anonymous": "always", "named": "always"}],
         "camelcase": 0,
-        "no-return-assign": 0,
-        "react/react-in-jsx-scope": "off",
-        "no-console": "off",
-        "indent": ["error", 2]// Indent with 4 spaces
+        "no-return-assign": 0
+        //"react/react-in-jsx-scope": "off",
+        //"no-console": "off",
+        //"indent": ["error", 2]// Indent with 4 spaces
     }
 }

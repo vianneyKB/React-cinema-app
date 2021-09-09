@@ -4,6 +4,8 @@
         "aaron-bond.better-comments",
         "tabnine.tabnine-vscode",
         "felipecaputo.git-project-manager",
-        "softwaredotcom.swdc-vscode"
+        "softwaredotcom.swdc-vscode",
+        "tombonnike.vscode-status-bar-format-toggle",
+        "christian-kohler.path-intellisense"
     ]
 }
