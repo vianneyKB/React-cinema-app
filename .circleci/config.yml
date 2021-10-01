@@ -158,7 +158,6 @@ workflows:
                 - develop
                 - staging
                 - main
-
       - deploy-to-aws-s3:
           requires:
             - linting
